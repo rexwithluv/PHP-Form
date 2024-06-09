@@ -1,7 +1,7 @@
 services:
   php-apache:
     build: .
-    image: php:apache-bullseye-mysqli
+    image: php:apache-bullseye-pdo
     container_name: apache_server_proyectoAlberto
     ports:
       - "8888:80"

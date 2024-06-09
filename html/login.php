@@ -17,7 +17,7 @@
     $charset = "utf8mb4";
 
     // Sentencia para conectarnos a la BD
-    $dsn = "mysql:host=$host;$dbname=$dbname;charset=$charset";
+    $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
 
     // Opciones para la BD
     $options = [
