@@ -1,0 +1,49 @@
+services:
+  php-apache:
+    build: .
+    image: php:apache-bullseye-mysqli
+    container_name: apache_server_proyectoAlberto
+    ports:
+      - "8888:80"
+    volumes:
+      - ./html:/var/www/html
+    networks:
+      alberto-net:
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:noble
+    container_name: mariadb_proyectoAlberto
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123.
+      MYSQL_DATABASE: albertoBD
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: abc123.
+    ports:
+      - "8806:3306"
+    networks:
+      alberto-net:
+        ipv4_address: 172.20.0.2
+
+  phpmyadmin:
+    image: phpmyadmin:apache
+    container_name: phpmyadmin_proyectoAlberto
+    environment:
+      PMA_HOST: mariadb
+      MYSQL_ROOT_PASSWORD: abc123.
+    networks:
+      alberto-net:
+    ports:
+      - "8889:80"
+    depends_on:
+      - mariadb
+
+networks:
+  alberto-net:
+    name: alberto-net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
