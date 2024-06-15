@@ -1,5 +1,0 @@
-Enlace con respuesta:
-https://stackoverflow.com/questions/46879196/mysqli-not-found-dockerized-php
-
-Comando:
-docker-php-ext-install mysqli

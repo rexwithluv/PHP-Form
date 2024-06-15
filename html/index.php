@@ -29,7 +29,6 @@ $options = [
 </head>
 
 <body>
-
     <?php
     // Si la conexión a la DB falla
     try {
@@ -38,7 +37,15 @@ $options = [
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // Sentencia SQL
-            $sql = "SELECT nombreCompleto, TRUNCATE(datediff(curdate(), fechaNacimiento)/365, 0) AS edad, password FROM usuarios WHERE username = ?";
+            $sql = "SELECT
+                    ID,
+                    nombreCompleto,
+                    TRUNCATE(DATEDIFF(CURDATE(), fechaNacimiento) / 365, 0) AS edad,
+                    password
+                FROM
+                    usuarios
+                WHERE
+                    username = ?;";
 
             // Preparamos
             $stmt = $pdo->prepare($sql);
@@ -53,49 +60,67 @@ $options = [
             if ($usuario !== false) {
                 // Comprobamos si la contraseña es correcta
                 if ($usuario["password"] === $_POST["password"]) {
-                    echo "<h1>¡Bienvenido " . $usuario["nombreCompleto"] . "!</h1>";
-                    echo "<h3>Ahora mismo tienes " . $usuario["edad"] . " años :)</h3>";
+                    // Guardamos datos de la sesión
+                    $_SESSION["userID"] = $usuario["ID"];
 
-                    echo "<a href='create-post.php'>Crear post</a>
+                    // Damos la bienvenida
+                    echo "
+                        <h1>¡Bienvenido " . $usuario["nombreCompleto"] . "!</h1>
+                        <h3>Ahora mismo tienes " . $usuario["edad"] . " años :)</h3>
+                        <a href='create-post.php'>Crear post</a>
                         <a href='edit-post.php'>Editar post</a>
-                         <a href='remove-post.php'>Eliminar post</a>";
+                        <a href='remove-post.php'>Eliminar post</a>
+                        <hr/>";
+
+                    // Sentencia SQL para los últimos 10 posts de la BD
+                    $sql = "SELECT
+                            u.username, p.fechaPublicacion, p.contenido
+                        FROM
+                            publicaciones AS p
+                                INNER JOIN
+                            usuarios AS u ON p.userID = u.ID
+                        ORDER BY p.fechaPublicacion DESC
+                        LIMIT 10;";
+
+                    // Preparamos
+                    $stmt = $pdo->prepare($sql);
+
+                    // Ejecutamos
+                    $stmt->execute();
+
+                    $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    print_r($posts);
                 }
             } else {
-                echo "
-                <div class='centered-container'>
-                    <h1>No he podido verificar tus datos, lo siento :(</h1>
-                </div>";
+                echo "<h1>No he podido verificar tus datos, lo siento :(</h1>";
             }
         } else {
             echo "
-            <div class='centered-container'>
-                <div class='container'>
-                    <div class='row justify-content-center'>
-                        <div class='col-md-4'>
-                            <div class='border p-4 rounded'><h2 class='text-center'>Iniciar Sesión</h2>
-                                <form action='' method='post'>
-                                    <div class='mb-3'>
-                                        <label for='username' class='form-label'>Usuario</label>
-                                        <input type='text' class='form-control' name='username' id='username' placeholder='Ingrese su usuario' required />
-                                    </div>
-                                    <div class='mb-3'>
-                                        <label for='passwd' class='form-label'>Contraseña</label>
-                                        <input type='password' class='form-control' name='password' id='password' placeholder='Ingrese su contraseña' required />
-                                    </div>
-                                    <button type='submit' class='btn btn-primary'>
-                                    Iniciar Sesión
-                                    </button>
-                                </form>
+                <div class='centered-container'>
+                    <div class='container'>
+                        <div class='row justify-content-center'>
+                            <div class='col-md-4'>
+                                <div class='border p-4 rounded'><h2 class='text-center'>Iniciar Sesión</h2>
+                                    <form action='' method='post'>
+                                        <div class='mb-3'>
+                                            <label for='username' class='form-label'>Usuario</label>
+                                            <input type='text' class='form-control' name='username' id='username' placeholder='Ingrese su usuario' required />
+                                        </div>
+                                        <div class='mb-3'>
+                                            <label for='passwd' class='form-label'>Contraseña</label>
+                                            <input type='password' class='form-control' name='password' id='password' placeholder='Ingrese su contraseña' required />
+                                        </div>
+                                        <button type='submit' class='btn btn-primary'>Iniciar Sesión</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>";
+                </div>";
         }
     } catch (\PDOException $e) {
         throw new \PDOException($e->getMessage(), (int) $e->getCode());
     } ?>
-
 </body>
 
 </html>
