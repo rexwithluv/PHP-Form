@@ -1,3 +1,6 @@
-.block:not(:last-child) {
-  margin-bottom: 7.5rem;
+:root {
+  .block:not(:last-child) {
+    margin-bottom: 6rem;
+  }
+
 }
