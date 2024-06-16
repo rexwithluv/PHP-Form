@@ -18,12 +18,12 @@ $options = [
 
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
     <link rel="stylesheet" href="index.css" />
     <title>Login</title>
 </head>
@@ -95,28 +95,55 @@ $options = [
                 echo "<h1>No he podido verificar tus datos, lo siento :(</h1>";
             }
         } else {
-            echo "
-                <div class='centered-container'>
-                    <div class='container'>
-                        <div class='row justify-content-center'>
-                            <div class='col-md-4'>
-                                <div class='border p-4 rounded'><h2 class='text-center'>Iniciar Sesión</h2>
-                                    <form action='' method='post'>
-                                        <div class='mb-3'>
-                                            <label for='username' class='form-label'>Usuario</label>
-                                            <input type='text' class='form-control' name='username' id='username' placeholder='Ingrese su usuario' required />
-                                        </div>
-                                        <div class='mb-3'>
-                                            <label for='passwd' class='form-label'>Contraseña</label>
-                                            <input type='password' class='form-control' name='password' id='password' placeholder='Ingrese su contraseña' required />
-                                        </div>
-                                        <button type='submit' class='btn btn-primary'>Iniciar Sesión</button>
-                                    </form>
+            echo '
+            <div class="block">
+                <div class="hero is-link">
+                    <div class="hero-body has-text-centered">
+                        <h2 class="title is-2">Bienvenido al formulario de login.</h2>
+                        <h4 class="title is-4">Por favor, rellena los campos.</h4>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="block">
+                <div class="fixed-grid has-3-cols">
+                    <div class="grid">
+                        <div class="cell is-col-start-2 box">
+                            <h2 class="title is-2 has-text-centered">Iniciar sesión</h2>
+                            <form action="" method="post">
+
+                                <div class="field">
+                                    <label class="label" for="username">Usuario</label>
+                                    <div class="control has-icon-left">
+                                        <input class="input" type="text" name="username" id="username"
+                                            placeholder="Ingrese su usuario" required />
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
+
+                                <div class="field">
+                                    <label class="label" for="passwd">Contraseña</label>
+                                    <div class="control has-icon-left">
+                                        <input class="input" type="password" name="password" id="password"
+                                            placeholder="Ingrese su contraseña" required />
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-lock"></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="has-text-centered">
+                                    <button type="submit" class="button is-link has-text-centered">Iniciar Sesión</button>
+                                </div>
+
+                            </form>
                         </div>
                     </div>
-                </div>";
+                </div>
+            </div>';
         }
     } catch (\PDOException $e) {
         throw new \PDOException($e->getMessage(), (int) $e->getCode());
