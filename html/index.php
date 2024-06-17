@@ -60,7 +60,7 @@ $options = [
             if ($usuario !== false) {
                 // Comprobamos si la contraseña es correcta
                 if ($usuario["password"] === $_POST["password"]) {
-                    
+
                     // Guardamos datos de la sesión
                     $_SESSION["userID"] = $usuario["ID"];
                     $_SESSION["userNombreCompleto"] = $usuario["nombreCompleto"];
@@ -118,8 +118,10 @@ $options = [
                                     </div>
                                 </div>
 
-                                <div class="has-text-centered">
-                                    <button type="submit" class="button is-link has-text-centered">Iniciar Sesión</button>
+                                <div class="field has-text-centered">
+                                    <div class="control">
+                                        <button type="submit" class="button is-link has-text-centered">Iniciar Sesión</button>
+                                    </div>
                                 </div>
 
                             </form>

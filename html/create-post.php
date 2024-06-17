@@ -21,7 +21,7 @@ $options = [
 
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 
 <head>
   <meta charset="UTF-8" />
@@ -31,10 +31,45 @@ $options = [
 </head>
 
 <body>
-  <form action="" method="post">
-    <textarea name="contenido" id="contenido" required></textarea>
-    <button type="submit">Crear post</button>
-  </form>
+
+  <div class="block">
+    <div class="hero is-link">
+      <div class="hero-body has-text-centered">
+        <h2 class="title is-2">Bienvenido al creador de post.</h2>
+        <h4 class="title is-4">Por favor, rellena los campos.</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="fixed-grid has-3-cols">
+      <div class="grid">
+        <div class="cell is-col-start-2 box">
+          <h2 class="title is-2 has-text-centered">
+            <span class="icon-text">
+              <i class="fas fa-arrow-down"></i>
+            </span>
+            Introduce aquí tus pensamientos
+          </h2>
+          <form action="" method="post">
+            <div class="field">
+              <div class="control">
+                <textarea name="contenido" id="contenido" class="textarea" required></textarea>
+              </div>
+            </div>
+
+            <div class="field has-text-centered">
+              <div class="control">
+                <button type="submit" class="button is-medium">Publicar</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <?php
   // Si la conexión a la DB falla
@@ -52,8 +87,12 @@ $options = [
 
       // Ejecutamos
       $stmt->execute([$_SESSION["userID"], $_POST["contenido"]]);
-
-      echo "Post publicado!";
+  ?>
+      <script>
+        alert("Post publicado!");
+        window.location.replace("welcome.php");
+      </script>
+  <?php
     }
   } catch (\PDOException $e) {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
