@@ -1,0 +1,14 @@
+:root {
+    .button:not(:last-child) {
+      margin-right: 6rem;
+    }
+
+    .columns-posts{
+        margin: 1rem;
+    }
+
+    .date-align-right{
+      text-align:right;
+    }
+
+  }
