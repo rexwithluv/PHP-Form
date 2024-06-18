@@ -1,6 +1,11 @@
-:root {
-    .button:not(:last-child) {
-      margin-right: 6rem;
+
+    .button.is-medium{
+      margin-right: 4rem;
+      margin-left: 4rem;
+    }
+
+    .button.is-1{
+      margin-top:2.5rem;
     }
 
     .columns-posts{
@@ -10,5 +15,3 @@
     .date-align-right{
       text-align:right;
     }
-
-  }

@@ -16,7 +16,8 @@ $options = [
     PDO::ATTR_EMULATE_PREPARES => false,
 ];
 
-if ($_SESSION["userID"] === false) {
+// Si el usuario no ha iniciado sesión lo redirige al index.php
+if (!isset($_SESSION["userID"])) {
     header("Location:index.php");
 }
 ?>
@@ -38,13 +39,23 @@ if ($_SESSION["userID"] === false) {
         $pdo = new PDO($dsn, $serveruser, $serverpasswd, $options);
     ?>
         <div class="hero is-link ">
-            <div class="hero-body has-text-centered">
-                <h1 class="title is-1">¡Bienvenido <?php echo $_SESSION["userNombreCompleto"] ?>!</h1>
-                <h3 class="title is-3">Ahora mismo tienes <?php echo $_SESSION["userEdad"] ?> años :)</h3>
-                <a class="button is-medium" href="create-post.php">Crear posts</a>
-                <a class="button is-medium" href="edit-post.php">Editar posts</a>
-                <a class="button is-medium" href="remove-post.php">Eliminar posts</a>
+            <div class="hero-body">
+                <div class="has-text-centered">
+                    <h1 class="title is-1">¡Bienvenido <?php echo $_SESSION["userNombreCompleto"] ?>!</h1>
+                    <h3 class="title is-3">Ahora mismo tienes <?php echo $_SESSION["userEdad"] ?> años :&#41;</h3>
+                </div>
             </div>
+                <div class="hero-body">
+                    <div class="columns is-centered">
+                        <a class="column is-2 button is-medium" href="create-post.php">Crear posts</a>
+                        <a class="column is-2 button is-medium" href="edit-post.php">Editar posts</a>
+                        <a class="column is-2 button is-medium" href="remove-post.php">Eliminar posts</a>
+                    </div>
+                    <div class="columns is-centered">
+                        <a href="logout.php" class=" column is-1 is-danger button">Cerrar sesión</a>
+                    </div>
+                </div>
+
         </div>
 
         <?php
@@ -77,7 +88,7 @@ if ($_SESSION["userID"] === false) {
                             <div class="media-content">
                                 <h4 class="title is-4"><?php echo $post["nombreCompleto"] ?></h4>
                                 <h6 class="subtitle is-6"><?php echo "@" . $post["username"] ?></h6>
-                                <div class="content"> <?php echo $post["contenido"] ?></div>
+                                <div class="content"> <?php echo htmlspecialchars($post["contenido"], ENT_QUOTES)  ?></div>
                                 <div class="content date-align-right">
                                     <?php $fechaPublicacion = new DateTime($post["fechaPublicacion"]);
                                         echo $fechaPublicacion->format("d/m/Y H:i") ?>
