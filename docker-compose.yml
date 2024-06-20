@@ -1,6 +1,9 @@
 services:
   mariadb:
-    image: mariadb:noble
+    build:
+      context: .
+      dockerfile: Dockerfile-mariadb
+    image: mariadb:noble-madrid
     container_name: mariadb_proyectoAlberto
     environment:
       MYSQL_ROOT_PASSWORD: abc123.
@@ -14,7 +17,9 @@ services:
         ipv4_address: 172.20.0.2
 
   php-apache:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile-apache
     image: php:apache-bullseye-pdo
     container_name: apache_server_proyectoAlberto
     ports:
