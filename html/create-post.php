@@ -3,7 +3,7 @@ session_start();
 
 // Datos para la conexión a la BD
 $host = "172.20.0.2";
-$dbname = "albertoBD";
+$dbname = "PHPFormBD";
 $serveruser = "admin";
 $serverpasswd = "abc123.";
 $charset = "utf8mb4";
@@ -27,6 +27,7 @@ $options = [
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <title>Creador de posts</title>
 </head>
 
@@ -46,10 +47,10 @@ $options = [
       <div class="grid">
         <div class="cell is-col-start-2 box">
           <h2 class="title is-2 has-text-centered">
-            <span class="icon-text">
+            Introduce aquí tus pensamientos
+            <span class="icon">
               <i class="fas fa-arrow-down"></i>
             </span>
-            Introduce aquí tus pensamientos
           </h2>
           <form action="" method="post">
             <div class="field">

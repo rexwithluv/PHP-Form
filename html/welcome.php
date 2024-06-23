@@ -1,7 +1,7 @@
 <?php session_start();
 // Datos para la conexión a la BD
 $host = "172.20.0.2";
-$dbname = "albertoBD";
+$dbname = "PHPFormBD";
 $serveruser = "admin";
 $serverpasswd = "abc123.";
 $charset = "utf8mb4";

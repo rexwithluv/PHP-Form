@@ -4,16 +4,16 @@ services:
       context: .
       dockerfile: Dockerfile-mariadb
     image: mariadb:noble-madrid
-    container_name: mariadb_proyectoAlberto
+    container_name: PHPForm-mariadb
     environment:
       MYSQL_ROOT_PASSWORD: abc123.
-      MYSQL_DATABASE: albertoBD
+      MYSQL_DATABASE: PHPFormBD
       MYSQL_USER: admin
       MYSQL_PASSWORD: abc123.
     ports:
       - "8806:3306"
     networks:
-      alberto-net:
+      phpform-net:
         ipv4_address: 172.20.0.2
 
   php-apache:
@@ -21,32 +21,32 @@ services:
       context: .
       dockerfile: Dockerfile-apache
     image: php:apache-bullseye-pdo
-    container_name: apache_server_proyectoAlberto
+    container_name: PHPForm-apache
     ports:
       - "8888:80"
     volumes:
       - ./html:/var/www/html
     networks:
-      alberto-net:
+      phpform-net:
     depends_on:
       - mariadb
 
   phpmyadmin:
     image: phpmyadmin:apache
-    container_name: phpmyadmin_proyectoAlberto
+    container_name: PHPForm-pma
     environment:
       PMA_HOST: mariadb
       MYSQL_ROOT_PASSWORD: abc123.
     networks:
-      alberto-net:
+      phpform-net:
     ports:
       - "8889:80"
     depends_on:
       - mariadb
 
 networks:
-  alberto-net:
-    name: alberto-net
+  phpform-net:
+    name: phpform-net
     driver: bridge
     ipam:
       config:
